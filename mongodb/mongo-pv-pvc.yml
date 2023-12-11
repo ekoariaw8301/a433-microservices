@@ -1,3 +1,4 @@
+# membuat persistent volume
 apiVersion: v1
 kind: PersistentVolume
 metadata:

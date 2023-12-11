@@ -1,13 +1,54 @@
-# membuat service mangodb dengan port 27017
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: mongo-service
-  labels:
-    app: database
+  name: mongodb
+# konfigurasi Statefulset
 spec:
-  ports:
-  - port: 27017
-    protocol: TCP
+  # nama service StatefulSet
+  serviceName: mongo-service
+  replicas: 1
   selector:
-    app: database
+    matchLabels:
+      app: database
+      selector: mongodb
+  template:
+    metadata:
+      labels:
+        app: database
+        selector: mongodb
+    spec:
+      containers:
+      - image: mongo:4.4.3
+        name: mongodb
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME_FILE
+          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_PASSWORD_FILE
+          value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
+        - name: mongo-credentials
+          mountPath: /etc/mongo-credentials
+        - name: mongo-config
+          mountPath: /config
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-pvc
+      - name: mongo-credentials
+        secret:
+          secretName: mongo-credentials
+          items:
+          - key: MONGO_ROOT_USERNAME
+            path: MONGO_ROOT_USERNAME
+          - key: MONGO_ROOT_PASSWORD
+            path: MONGO_ROOT_PASSWORD
+      - name: mongo-config
+        configMap:
+          name: mongo-config
+          items:
+          - key: mongo.conf
+            path: mongo.conf

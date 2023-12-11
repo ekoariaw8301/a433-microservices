@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
-#config of spec Statefulset
+# konfigurasi Statefulset
 spec:
-  #name service StatefulSet
+  # nama service StatefulSet
   serviceName: mongo-service
   replicas: 1
   selector:

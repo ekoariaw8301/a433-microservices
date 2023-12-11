@@ -1,0 +1,26 @@
+#Version API
+apiVersion: apps/v1
+#Type of object
+kind: Deployment
+metadata:
+  name: karsajobs-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    #Config of spec container in pod
+    spec:
+      containers:
+      - name: karsajobs-ui
+        image: ghcr.io/ekoariaw8301/karsajobs-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: VUE_APP_BACKEND
+          value: "http://127.0.0.1:53179"

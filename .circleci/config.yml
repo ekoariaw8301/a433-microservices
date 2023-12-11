@@ -1,8 +1,10 @@
+# versi
 version: 2.1
 
 orbs:
   docker: circleci/docker@2.2.0
 
+# build ke github
 jobs:
   build-app-karsajobs-ui:
     executor: docker/docker
@@ -17,7 +19,7 @@ jobs:
     - run:
         name: Publish Docker Image to Github Container Registry
         command: |
-          echo "CR_PAT" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+          echo "$CR_PAT" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
           docker push $IMAGE_NAME:latest
 
 workflows:

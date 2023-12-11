@@ -1,6 +1,6 @@
-#Version API
+# Versi API
 apiVersion: apps/v1
-#Type of object
+# spesifikasi deployment karsajobs frontend
 kind: Deployment
 metadata:
   name: karsajobs-frontend
@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: frontend
-    #Config of spec container in pod
+    # spesifikasi container di pod
     spec:
       containers:
       - name: karsajobs-ui

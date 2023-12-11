@@ -1,6 +1,6 @@
-#Version API
+# Versi API
 apiVersion: v1
-#Type of object
+# service karsajobs-ui
 kind: Service
 metadata:
   name: karsajobs-ui-service

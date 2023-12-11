@@ -18,7 +18,7 @@ jobs:
         name: Publish Docker Image to Github Container Registry
         command: |
           echo "CR_PAT" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
-          docker push $IMAGE_NAME: latest
+          docker push $IMAGE_NAME:latest
 
 workflows:
   ci:
